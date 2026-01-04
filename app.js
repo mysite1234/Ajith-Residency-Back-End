@@ -11,6 +11,15 @@ app.use(cors({
   credentials: true,
 }));
 
+
+// Health check route
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "Backend running 🚀",
+  });
+});
+
+
 // ✅ Middleware to parse JSON
 app.use(express.json());
 
