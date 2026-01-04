@@ -1,0 +1,130 @@
+; flow-1  
+/backend
+│
+├── /config             # DB and app configs
+│   └── db.js           # PostgreSQL connection setup
+│
+├── /controllers        # Handle HTTP logic
+│   └── userController.js
+│
+├── /routes             # Define Express routes
+│   └── userRoutes.js
+│
+├── /models             # DB models (Sequelize / Knex / raw SQL)
+│   └── userModel.js
+│
+├── /services           # Business logic
+│   └── userService.js
+│
+├── /middlewares        # Auth, validation, error handlers
+│   └── authMiddleware.js
+│
+├── /validators         # Request body validation schemas
+│   └── userValidator.js
+│
+├── /utils              # Helper functions
+│   └── jwtUtils.js
+│
+├── /migrations         # DB migrations
+│
+├── app.js              # Express app entry point
+├── server.js           # Run the server
+└── .env
+https://chatgpt.com/c/684fecbe-0f44-8006-a5fc-d5d0ada1e31a
+
+
+Route  →  Controller  →  Service  →  Model  →  Database
+Route: /api/users/register
+
+Controller: receives the request
+
+Service: does the business logic (hashing, JWT, validation)
+
+Model: executes SQL (INSERT, SELECT, etc.)
+
+
+; Flow-2  in simple way.
+
+┌───────────────┐
+│   Client      │
+│ (Frontend /   │
+│  Postman)     │
+└───────┬───────┘
+        │
+        │  POST /api/users/login
+        ▼
+┌────────────────┐
+│     ROUTES     │
+│ userRoutes.js  │
+│                │
+│ • Defines URL  │
+│ • Sends request│
+│   to controller│
+└───────┬────────┘
+        │
+        ▼
+┌────────────────────┐
+│   CONTROLLER       │
+│ userController.js  │
+│                    │
+│ • Receives request │
+│ • Reads req.body   │
+│ • Calls service    │
+│ • Sends response   │
+└───────┬────────────┘
+        │
+        ▼
+┌────────────────────┐
+│    SERVICE         │
+│ userService.js     │
+│                    │
+│ • Main logic       │
+│ • Check user exists│
+│ • Compare password │
+│ • Generate JWT     │
+└───────┬────────────┘
+        │
+        ▼
+┌────────────────────┐
+│     MODEL          │
+│ userModel.js       │
+│                    │
+│ • Executes SQL     │
+│ • SELECT user      │
+│ • Talks to DB      │
+└───────┬────────────┘
+        │
+        ▼
+┌────────────────────┐
+│    DATABASE        │
+│  PostgreSQL        │
+│                    │
+│ • users table      │
+│ • password_hash    │
+│ • is_active        │
+└────────────────────┘
+
+; Flow-3 in simple way.  
+
+Request comes in
+↓
+Route → decides WHERE to go
+↓
+Controller → receives & responds
+↓
+Service → thinks & decides
+↓
+Model → talks to database
+↓
+Database → gives data back
+
+
+users
+├── id
+├── email
+├── password_hash
+├── is_email_verified
+├── is_active
+├── created_at
+├── updated_at
+
