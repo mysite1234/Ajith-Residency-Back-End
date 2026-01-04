@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 const residencyModel = {
-  // CREATE
+  
   createResidency: async (data) => {
     const { name, address, landmark, contact, email } = data;
 
