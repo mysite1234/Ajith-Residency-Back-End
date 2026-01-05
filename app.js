@@ -6,10 +6,14 @@ const app = express();
 
 // ✅ CORS (VERY IMPORTANT)
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'https://ajith-residency-github-front-end-h8.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  origin: [
+    "http://localhost:3000",                 // local frontend
+    "https://ajith-residency-github-front-end-h8.vercel.app" // deployed frontend
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
 }));
+
 
 
 // Health check route
