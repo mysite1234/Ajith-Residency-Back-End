@@ -62,11 +62,14 @@ const userService = {
   // ======================
   // SEND OTP (LOGIN)
   // ======================
-  sendLoginOTP: async ({ email }) => {
-    console.log("sendLoginOTPEmail",email);
+  sendLoginOTP: async (email) => {
+    console.log("sendLoginOTPEmail:", email);
+
+    if (!email) {
+      throw new Error("Email is required");
+    }
 
     const user = await userModel.findByEmail(email);
-    
     if (!user) {
       throw new Error("User not registered");
     }
@@ -85,8 +88,7 @@ const userService = {
 
     await sendOTPEmail(email, otp);
 
-
-    console.log("LOGIN OTP:", otp); // replace with email sender later
+    console.log("LOGIN OTP:", otp);
 
     return { message: "OTP sent to email" };
   },
@@ -94,7 +96,11 @@ const userService = {
   // ======================
   // VERIFY OTP (LOGIN)
   // ======================
-  verifyLoginOTP: async ({ email, otp }) => {
+  verifyLoginOTP: async (email, otp) => {
+    if (!email || !otp) {
+      throw new Error("Email and OTP are required");
+    }
+
     const record = await otpModel.findValidOTP(email, otp);
     if (!record) {
       throw new Error("Invalid or expired OTP");
